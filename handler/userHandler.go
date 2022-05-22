@@ -20,23 +20,26 @@ func Register(c *gin.Context) {
 	var user entry.User
 	err := c.Bind(&user)
 	if err != nil {
+		log.Printf("Register fail: err =%w", err)
 		c.JSON(http.StatusBadRequest, gin.H{
-			"result": err.Error(),
+			"status": "fail",
 		})
+		return
 	}
 
 	user.Uid = fmt.Sprint(uuid.NewV4())
 	dao.NewUser(&user)
 	if err != nil {
-		c.JSON(200, gin.H{
-			"status": "success",
-			"data":   entry.User{Uid: user.Uid},
-		})
-	} else {
 		log.Printf("Register fail: err= %w", err)
 		c.JSON(200, gin.H{
 			"status":  "fail",
 			"Message": "该昵称已被使用",
+		})
+		return
+	} else {
+		c.JSON(200, gin.H{
+			"status": "fail",
+			"data":   entry.User{Uid: user.Uid},
 		})
 	}
 
@@ -47,13 +50,16 @@ func Login(c *gin.Context) {
 	var user entry.User
 	err := c.Bind(&user)
 	if err != nil {
+		log.Printf("Login fail: err =%w", err)
 		c.JSON(http.StatusBadRequest, gin.H{
-			"result": err.Error(),
+			"status": "fail",
 		})
+		return
 	}
 	user.Uid = dao.SelectUidByUsernameAndPwd(&user)
 	if err != nil {
 		log.Printf("Login: %v", err)
+		return
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"name": user.Uid,
@@ -96,21 +102,34 @@ func AddToCart(c *gin.Context) {
 func Pay(c *gin.Context) {
 	// 接收一个order，返回bool
 	var order entry.Order
-	err := c.Bind(&order)
-	if err != nil {
-		log.Printf("Pay err=%w", err)
+	err1 := c.Bind(&order)
+	status, err2 := dao.UpDateStatusOfOrder(order)
+	if err1 != nil {
+		log.Printf("Pay err1=%w err2=%w", err1, err2)
 		c.JSON(500, gin.H{})
 	}
 
 	c.JSON(200, gin.H{
-		"status": "success",
+		"status": status,
 	})
 
 }
 
 // GetOrdersByUid 查询自己的订单
 func GetOrdersByUid(c *gin.Context) {
-
+	uid := c.Query("uid")
+	orders, err := dao.SelectOrdersByUid(uid)
+	if err != nil {
+		log.Printf("GetOrderByUid: err=%w", err)
+		c.JSON(500, gin.H{
+			"status": "fail",
+		})
+		return
+	}
+	c.JSON(200, gin.H{
+		"status": "success",
+		"data":   orders,
+	})
 }
 
 // CreatOrder 生成订单
@@ -129,4 +148,5 @@ func CreatOrder(c *gin.Context) {
 		"status":  "success",
 		"orderId": order.Oid,
 	})
+
 }

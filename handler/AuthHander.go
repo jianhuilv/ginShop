@@ -6,23 +6,47 @@ import (
 	"log"
 )
 
-// Auth 权限验证
-func Auth(ctx *gin.Context) {
+// AuthUser 权限验证
+func AuthUser(ctx *gin.Context) {
 	tokenString := ctx.Query("tokenString")
 	userId := ctx.Query("uid")
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		return MySecret, nil
 	})
 	if err != nil {
-		log.Printf("Auth err: req=%v err=%w", ctx, err)
+		log.Printf("AuthUser err: req=%v err=%w", ctx, err)
+		ctx.JSON(200, gin.H{
+			"status": "fail",
+			"msg":    "token wrong or have expired",
+		})
 	}
-	if token.Claims.(jwt.MapClaims)["name"] == userId {
-
+	if token.Claims.(jwt.MapClaims)["name"] != userId {
+		log.Printf("log.Printf(\"AuthUser err: req=%v err=%w\", ctx, err)")
+		ctx.JSON(200, gin.H{
+			"status": "fail",
+			"msg":    "you have no right to do this",
+		})
 	}
 }
 
-func secret() jwt.Keyfunc { //按照这样的规则解析
-	return func(t *jwt.Token) (interface{}, error) {
-		return []byte("gettoken"), nil
+func AuthSaler(ctx *gin.Context) {
+	tokenString := ctx.Query("tokenString")
+	userId := ctx.Query("uid")
+	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+		return MySecret, nil
+	})
+	if err != nil {
+		log.Printf("AuthUser err: req=%v err=%w", ctx, err)
+		ctx.JSON(200, gin.H{
+			"status": "fail",
+			"msg":    "token wrong or have expired",
+		})
+	}
+	if token.Claims.(jwt.MapClaims)["name"] != userId {
+		log.Printf("log.Printf(\"AuthUser err: req=%v err=%w\", ctx, err)")
+		ctx.JSON(200, gin.H{
+			"status": "fail",
+			"msg":    "you have no right to do this",
+		})
 	}
 }

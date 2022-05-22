@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"goShop/dao"
 	"goShop/entry"
+	"log"
 	"net/http"
 )
 
@@ -30,7 +31,21 @@ func GetProducts(c *gin.Context) {
 }
 
 //查询商品信息
-func GetProductById(c *gin.Context) {
+func GetProductByPId(c *gin.Context) {
+	pid := c.Query("pid")
+	product, err := dao.SelectProductByPid(pid)
+	if err != nil {
+		log.Printf("GetProductByPid")
+		c.JSON(500, gin.H{
+			"success": false,
+		})
+		return
+	}
+
+	c.JSON(200, gin.H{
+		"success": true,
+		"data":    product,
+	})
 
 }
 

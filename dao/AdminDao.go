@@ -14,6 +14,6 @@ func SelectOrderBySid(sid string) (orders entry.Order, err error) {
 	return
 }
 
-func GetOrders() (orders []entry.Order) {
+func GetOrders() (orders []entry.Order, err error) {
 	return
 }

@@ -25,12 +25,12 @@ func init() {
 	userGroup.POST("/register", handler.Register)
 	userGroup.POST("/login", handler.Login)
 	userGroup.GET("/logout", handler.Logout)
-	userGroup.GET("/addToCart", handler.Auth, handler.AddToCart)
-	userGroup.GET("/pay", handler.Auth, handler.Pay)
-	userGroup.GET("/getOrdersByUid", handler.Auth, handler.GetOrdersByUid)
+	userGroup.GET("/addToCart", handler.AuthUser, handler.AddToCart)
+	userGroup.GET("/pay", handler.AuthUser, handler.Pay)
+	userGroup.GET("/getOrdersByUid", handler.AuthUser, handler.GetOrdersByUid)
 
 	commonGroup.GET("/getProducts", handler.GetProducts)
-	commonGroup.GET("/getProductById", handler.GetProductById)
+	commonGroup.GET("/getProductById", handler.GetProductByPId)
 	commonGroup.GET("/getTypeBySid", handler.GetTypeBySid)
 
 	adminGroup.GET("/reset", handler.ResetPassWordBySid)
@@ -38,12 +38,12 @@ func init() {
 	adminGroup.GET("/getOrders", handler.GetOrders)
 	adminGroup.GET("/getOrdersBySid", handler.GetOrdersBySid)
 
-	salesPersonGroup.GET("/addType", handler.Auth, handler.AddType)
-	salesPersonGroup.GET("/deleteType", handler.Auth, handler.DeleteType)
-	salesPersonGroup.GET("/insertProduct", handler.Auth, handler.InsertProduct)
-	salesPersonGroup.GET("/deleteProduct", handler.Auth, handler.DeleteProduct)
-	salesPersonGroup.GET("/updateProduct", handler.Auth, handler.UpdateProduct)
-	salesPersonGroup.GET("/sendProduct", handler.Auth, handler.SendProduct)
-	salesPersonGroup.GET("/getLogs", handler.Auth, handler.GetLogs)
+	salesPersonGroup.GET("/addType", handler.AuthUser, handler.AddType)
+	salesPersonGroup.GET("/deleteType", handler.AuthUser, handler.DeleteType)
+	salesPersonGroup.GET("/insertProduct", handler.AuthUser, handler.InsertProduct)
+	salesPersonGroup.GET("/deleteProduct", handler.AuthUser, handler.DeleteProduct)
+	salesPersonGroup.GET("/updateProduct", handler.AuthUser, handler.UpdateProduct)
+	salesPersonGroup.GET("/sendProduct", handler.AuthUser, handler.SendProduct)
+	salesPersonGroup.GET("/getLogs", handler.AuthUser, handler.GetLogs)
 
 }
