@@ -18,7 +18,7 @@ var MySecret = []byte("qq.com")
 func Register(c *gin.Context) {
 
 	var user entry.User
-	err := c.Bind(&user)
+	err := c.BindJSON(&user)
 	if err != nil {
 		log.Printf("Register fail: err =%w", err)
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -28,7 +28,7 @@ func Register(c *gin.Context) {
 	}
 
 	user.Uid = fmt.Sprint(uuid.NewV4())
-	dao.NewUser(&user)
+	err = dao.NewUser(&user)
 	if err != nil {
 		log.Printf("Register fail: err= %w", err)
 		c.JSON(200, gin.H{
@@ -38,7 +38,7 @@ func Register(c *gin.Context) {
 		return
 	} else {
 		c.JSON(200, gin.H{
-			"status": "fail",
+			"status": "success",
 			"data":   entry.User{Uid: user.Uid},
 		})
 	}
@@ -138,15 +138,22 @@ func CreatOrder(c *gin.Context) {
 	var order entry.Order
 	err := c.Bind(order)
 	if err != nil {
+		log.Printf("CreatOrder fail: err=%w", err)
 		c.JSON(500, gin.H{
 			"status": "fail",
 		})
 		return
 	}
-
+	success, err := dao.InsertOrder(order)
+	if err != nil {
+		log.Printf("CreatOrder fail: err=%w", err)
+		c.JSON(500, gin.H{
+			"success": false,
+		})
+		return
+	}
 	c.JSON(200, gin.H{
-		"status":  "success",
+		"success": success,
 		"orderId": order.Oid,
 	})
-
 }

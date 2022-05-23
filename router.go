@@ -27,6 +27,7 @@ func init() {
 	userGroup.GET("/logout", handler.Logout)
 	userGroup.GET("/addToCart", handler.AuthUser, handler.AddToCart)
 	userGroup.GET("/pay", handler.AuthUser, handler.Pay)
+	userGroup.GET("/newOrder", handler.AuthUser, handler.CreatOrder)
 	userGroup.GET("/getOrdersByUid", handler.AuthUser, handler.GetOrdersByUid)
 
 	commonGroup.GET("/getProducts", handler.GetProducts)

@@ -5,10 +5,10 @@ import (
 )
 
 type User struct {
-	Uid      string
-	Mail     string
-	Username string
-	Password string
+	Uid      string `json:"uid"`
+	Mail     string `json:"mail"`
+	Username string `json:"username"`
+	Password string `json:"password"`
 }
 
 type PType struct {
@@ -29,6 +29,7 @@ type Product struct {
 	Image   string
 	PType   string
 	Remain  int
+	Price   string
 }
 
 type Sales struct {
