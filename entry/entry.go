@@ -54,6 +54,7 @@ type Cart struct {
 type Order struct {
 	Oid    string
 	Pid    string
+	Uid    string
 	Amount int
 	Time   timestamp.Timestamp
 }

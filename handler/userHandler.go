@@ -101,11 +101,10 @@ func AddToCart(c *gin.Context) {
 // Pay 购买
 func Pay(c *gin.Context) {
 	// 接收一个order，返回bool
-	var order entry.Order
-	err1 := c.Bind(&order)
-	status, err2 := dao.UpDateStatusOfOrder(order)
-	if err1 != nil {
-		log.Printf("Pay err1=%w err2=%w", err1, err2)
+	oid := c.Query("oid")
+	status, err := dao.UpDateStatusOfOrder(oid)
+	if err != nil {
+		log.Printf("Pay err1=%v err2=%v", err)
 		c.JSON(500, gin.H{})
 	}
 
