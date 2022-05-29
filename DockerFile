@@ -1,0 +1,9 @@
+
+FROM golang:1.14
+WORKDIR /go/src/app
+ADD . /go/src/app
+RUN go env -w GO111MODULE=on
+RUN go env -w GOPROXY=https://goproxy.cn,direct
+RUN go get -u github.com/gin-gonic/gin
+EXPOSE 9090
+CMD go run server.go
