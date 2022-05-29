@@ -12,49 +12,49 @@ type User struct {
 }
 
 type PType struct {
-	Sid      string
-	TypeName string
+	Sid      string `json:"sid"`
+	TypeName string `json:"type_name"`
 }
 
 type Admin struct {
-	Username string
-	Password string
+	Username string `json:"username"`
+	Password string `json:"password"`
 }
 
 type Product struct {
-	Pid     string
-	OwnerId string
-	PName   string
-	Detail  string
-	Image   string
-	PType   string
-	Remain  int
-	Price   string
+	Pid     string `json:"pid"`
+	OwnerId string `json:"owner_id"`
+	PName   string `json:"p_name"`
+	Detail  string `json:"detail"`
+	Image   string `json:"image"`
+	PType   string `json:"p_type"`
+	Remain  int    `json:"remain"`
+	Price   string `json:"price"`
 }
 
 type Sales struct {
-	Sid    string
-	Pid    string
-	Remain int
-	Sold   int
+	Sid    string `json:"sid"`
+	Pid    string `json:"pid"`
+	Remain int    `json:"remain"`
+	Sold   int    `json:"sold"`
 }
 
 type Saler struct {
-	Sid      string
-	Password string
-	SName    string
+	Sid      string `json:"sid"`
+	Password string `json:"password"`
+	SName    string `json:"s_name"`
 }
 
 type Cart struct {
-	Pid     string
-	OwnerId string
-	Amount  int
+	Pid     string `json:"pid"`
+	OwnerId string `json:"owner_id"`
+	Amount  int    `json:"amount"`
 }
 
 type Order struct {
-	Oid    string
-	Pid    string
-	Uid    string
-	Amount int
-	Time   timestamp.Timestamp
+	Oid    string              `json:"oid"`
+	Pid    string              `json:"pid"`
+	Uid    string              `json:"uid"`
+	Amount int                 `json:"amount"`
+	Time   timestamp.Timestamp `json:"time"`
 }
