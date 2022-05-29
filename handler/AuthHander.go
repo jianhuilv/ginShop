@@ -14,14 +14,14 @@ func AuthUser(ctx *gin.Context) {
 		return MySecret, nil
 	})
 	if err != nil {
-		log.Printf("AuthUser err: req=%v err=%w", ctx, err)
+		log.Printf("AuthUser err: req=%v err=%v", ctx, err)
 		ctx.JSON(200, gin.H{
 			"status": "fail",
 			"msg":    "token wrong or have expired",
 		})
 	}
 	if token.Claims.(jwt.MapClaims)["name"] != userId {
-		log.Printf("log.Printf(\"AuthUser err: req=%v err=%w\", ctx, err)")
+		log.Printf("AuthUser err: req=%v err=%v", ctx, err)
 		ctx.JSON(200, gin.H{
 			"status": "fail",
 			"msg":    "you have no right to do this",
@@ -36,14 +36,14 @@ func AuthSaler(ctx *gin.Context) {
 		return MySecret, nil
 	})
 	if err != nil {
-		log.Printf("AuthUser err: req=%v err=%w", ctx, err)
+		log.Printf("AuthUser err: req=%v err=%v", ctx, err)
 		ctx.JSON(200, gin.H{
 			"status": "fail",
 			"msg":    "token wrong or have expired",
 		})
 	}
 	if token.Claims.(jwt.MapClaims)["name"] != userId {
-		log.Printf("log.Printf(\"AuthUser err: req=%v err=%w\", ctx, err)")
+		log.Printf("AuthUser err: req=%v err=%v", ctx, err)
 		ctx.JSON(200, gin.H{
 			"status": "fail",
 			"msg":    "you have no right to do this",
