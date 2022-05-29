@@ -5,6 +5,7 @@ import (
 	"github.com/golang-jwt/jwt"
 	"goShop/dao"
 	"goShop/entry"
+	"goShop/utils"
 	"log"
 	"net/http"
 	"time"
@@ -49,18 +50,36 @@ func LoginForSaler(c *gin.Context) {
 func InsertProduct(c *gin.Context) {
 	var product entry.Product
 	err1 := c.Bind(&product)
-
 	if err1 != nil {
 		log.Printf("InsertProduct fail: err1=%w", err1)
-		c.JSON(200, gin.H{
+		c.JSON(500, gin.H{
 			"success": false,
 		})
 		return
 	}
+
+	// 获取图片
+	fileHeader, err := c.FormFile("image")
+	if err != nil {
+		log.Printf("InsertProduct fail: err1=%w", err1)
+		c.JSON(500, gin.H{
+			"success": false,
+		})
+		return
+	}
+	err = utils.UploadImage(product.Pid, fileHeader)
+	if err != nil {
+		log.Printf("InsertProduct fail: err1=%w", err1)
+		c.JSON(500, gin.H{
+			"success": false,
+		})
+		return
+	}
+
 	status, err2 := dao.InsertProductToDB(product)
 	if err1 != nil {
 		log.Printf("InsertProduct fail: err2=%w", err2)
-		c.JSON(200, gin.H{
+		c.JSON(500, gin.H{
 			"success": status,
 		})
 		return
@@ -93,6 +112,25 @@ func UpdateProduct(c *gin.Context) {
 		log.Printf("UpdateProduct bind fail: err=%w", err)
 	}
 	success := dao.UpdateProductFromDB(product)
+
+	// 获取图片
+	fileHeader, err1 := c.FormFile("image")
+	if err1 != nil {
+		log.Printf("InsertProduct fail: err1=%v", err1)
+		c.JSON(500, gin.H{
+			"success": false,
+		})
+		return
+	}
+	err2 := utils.UploadImage(product.Pid, fileHeader)
+	if err2 != nil {
+		log.Printf("InsertProduct fail: err1=%v", err2)
+		c.JSON(500, gin.H{
+			"success": false,
+		})
+		return
+	}
+
 	if !success {
 		c.JSON(200, gin.H{
 			"success": success,
