@@ -39,12 +39,12 @@ func init() {
 	adminGroup.GET("/getOrders", handler.GetOrders)
 	adminGroup.GET("/getOrdersBySid", handler.GetOrdersBySid)
 
-	salesPersonGroup.GET("/addType", handler.AuthUser, handler.AddType)
-	salesPersonGroup.GET("/deleteType", handler.AuthUser, handler.DeleteType)
-	salesPersonGroup.GET("/insertProduct", handler.AuthUser, handler.InsertProduct)
-	salesPersonGroup.GET("/deleteProduct", handler.AuthUser, handler.DeleteProduct)
-	salesPersonGroup.GET("/updateProduct", handler.AuthUser, handler.UpdateProduct)
-	salesPersonGroup.GET("/sendProduct", handler.AuthUser, handler.SendProduct)
-	salesPersonGroup.GET("/getLogs", handler.AuthUser, handler.GetLogs)
+	salesPersonGroup.GET("/addType", handler.AuthSaler, handler.AddType)
+	salesPersonGroup.GET("/deleteType", handler.AuthSaler, handler.DeleteType)
+	salesPersonGroup.GET("/insertProduct", handler.AuthSaler, handler.InsertProduct)
+	salesPersonGroup.GET("/deleteProduct", handler.AuthSaler, handler.DeleteProduct)
+	salesPersonGroup.GET("/updateProduct", handler.AuthSaler, handler.UpdateProduct)
+	salesPersonGroup.GET("/sendProduct", handler.AuthSaler, handler.SendProduct)
+	salesPersonGroup.GET("/getLogs", handler.AuthSaler, handler.GetLogs)
 
 }

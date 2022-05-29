@@ -46,7 +46,7 @@ func ResetPassWordBySid(c *gin.Context) {
 //查询某个销售人员的各个类别的销售情况
 func GetOrdersBySid(c *gin.Context) {
 	sid := c.Query("sid")
-	orders, err := dao.SelectOrdersByUid(sid)
+	orders, err := dao.SelectOrdersBySid(sid)
 	if err != nil {
 		log.Printf("GetOrdersBySid fail: err=%w", err)
 		c.JSON(200, gin.H{

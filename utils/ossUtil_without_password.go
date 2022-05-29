@@ -7,18 +7,18 @@ import (
 	"os"
 )
 
-func handleError(err error) {
+func handleErrorFake(err error) {
 	fmt.Println("Error:", err)
 	os.Exit(-1)
 }
 
-func GetImage(pid string) string {
+func GetImageFake(pid string) string {
 	// Endpoint以杭州为例，其它Region请按实际情况填写。
 	endpoint := "http://oss-cn-guangzhou.aliyuncs.com"
 	// 阿里云账号AccessKey拥有所有API的访问权限，风险很高。强烈建议您创建并使用RAM用户进行API访问或日常运维，请登录RAM控制台创建RAM用户。
-	accessKeyId := "LTAI5tL5y1zSQkRBzuzTY5RE"
-	accessKeySecret := "fxys8x8uNCv9y0Og5U2njXUFR6qOJk"
-	bucketName := "lvjianhui"
+	accessKeyId := "******"
+	accessKeySecret := "******"
+	bucketName := "******"
 	//objectName := "test2"
 	// <yourLocalFileName>由本地文件路径加文件名包括后缀组成，例如/users/local/myfile.txt。
 	//localFileName := "C:\\Users\\69060\\Desktop\\image\\发个帖子而已\\34b3497ff21fbc6580d3e977882059e36f2742d8.png"
@@ -46,12 +46,12 @@ func GetImage(pid string) string {
 	return signedURL
 }
 
-func UploadImage(pid string, fileHeader *multipart.FileHeader) error {
+func UploadImageFake(pid string, fileHeader *multipart.FileHeader) error {
 	// Endpoint以杭州为例，其它Region请按实际情况填写。
 	endpoint := "http://oss-cn-guangzhou.aliyuncs.com"
 	// 阿里云账号AccessKey拥有所有API的访问权限，风险很高。强烈建议您创建并使用RAM用户进行API访问或日常运维，请登录RAM控制台创建RAM用户。
-	accessKeyId := "LTAI5tL5y1zSQkRBzuzTY5RE"
-	accessKeySecret := "fxys8x8uNCv9y0Og5U2njXUFR6qOJk"
+	accessKeyId := "*********"
+	accessKeySecret := "*********"
 	bucketName := "lvjianhui"
 	//objectName := "test2"
 	// <yourLocalFileName>由本地文件路径加文件名包括后缀组成，例如/users/local/myfile.txt。
